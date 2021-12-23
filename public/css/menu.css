@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
+
+.aside-menu {
+    width: 200px;
+    height: 100%;
+    min-height: 100%;
+    background: #64b3f4;
+    position: absolute;
+    left: 0;
+}
+
+.aside-menu .menu-item {
+    width: auto;
+    height: auto;
+    text-align: center;
+    cursor: pointer;
+    border: 1px solid blue;
+    margin: 100px 10px 100px 10px;
+    font: normal normal normal 18px/16px Josefin Sans;
+    padding: 10px;
+}
+
+.noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
