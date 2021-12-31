@@ -19,8 +19,9 @@ window.Vue = require('vue').default;
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('user-action', require('./components/User/main.vue').default);
-Vue.component('printing-editor', require('./components/Printing/main.vue').default);
+Vue.component('main-app', require('./components/Home/main.vue').default);
+// Vue.component('user-action', require('./components/User/main.vue').default);
+// Vue.component('printing-editor', require('./components/Printing/main.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

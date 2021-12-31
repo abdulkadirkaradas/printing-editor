@@ -15,11 +15,9 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/css/perfect-scrollbar.min.css" rel="stylesheet" />
     <link href="{{ asset('css/layout.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/navbar.css') }}" rel="stylesheet" />
-    <link href="{{ asset('css/menu.css') }}" rel="stylesheet" />
     @yield('styles')
 </head>
 <body>
-    @include('partials.menu')
 
     @yield('content')
 

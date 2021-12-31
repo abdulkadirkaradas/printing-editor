@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
-class Users extends Model
+class UsersImagesTable extends Model
 {
     use SoftDeletes;
     use HasFactory;
 
-    public $table = 'users';
+    public $table = 'users_images';
 
 	protected $keyType = 'string';
     public $incrementing = false;
@@ -31,11 +31,11 @@ class Users extends Model
     ];
 
     protected $fillable = [
-        'name',
-        'surname',
-        'email',
-        'phone',
-        'address',
+        'file_id',
+        'file_name',
+        'file_extension',
+        'file_url',
+        'image_url',
         'created_at',
         'updated_at',
         'deleted_at',
