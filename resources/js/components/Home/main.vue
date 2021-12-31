@@ -10,10 +10,9 @@ import Menu from './menu.vue';
 import Dashboard from './dashboard.vue'
 
 export default {
-    props: {
-        selectedPageName: {
-            type: String,
-            default: "Dashboard"
+    data() {
+        return {
+            selectedPageName: "Dashboard",
         }
     },
     methods: {
