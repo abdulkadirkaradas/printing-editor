@@ -1,49 +1,24 @@
 <template>
-    <div class="dashnoard-container">
-        <div class="card" :class="selectedPage != `Dashboard` ? `hide` : null">
+    <div class="dashboard-container">
+        <div class="card">
             <div class="card-item noselect">1</div>
             <div class="card-item noselect">2</div>
             <div class="card-item noselect">3</div>
-        </div>
-        <div class="other-pages" :class="selectedPage == `Dashboard` ? `hide` : null">
-            <div v-if="selectedPage == `UserActions`">
-                <UserActions></UserActions>
-            </div>
-            <div v-else-if="selectedPage == `Printing`">
-                <PrintingActions></PrintingActions>
-            </div>
-            <div v-else-if="selectedPage == `Settings`">
-                <Settings></Settings>
-            </div>
         </div>
     </div>
 </template>
 
 <script>
-import UserActions from '../User/main.vue';
-import PrintingActions from '../Printing/main.vue';
-import Settings from '../Settings/main.vue';
 
 export default {
-    props: {
-        selectedPage: {
-            default: "Dashboard",
-            type: String
-        }
-    },
     methods: {
-        clg() {
-            console.log(this.selectedPage);
-        }
     },
-    components: {
-        UserActions, PrintingActions, Settings
-    }
+    components: {}
 }
 </script>
 
 <style lang="scss">
-    .dashnoard-container {
+    .dashboard-container {
         width: 100%;
         border: 3px solid black;
         padding: 10px;
