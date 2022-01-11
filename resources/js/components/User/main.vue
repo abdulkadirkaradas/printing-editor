@@ -1,16 +1,52 @@
 <template>
     <div class="user-container">
         <div class="card-container">
-            <div class="merge">
-                <div class="create-button noselect" @click="showModalFunc">Create User</div>
-                <div class="title noselect">You can see your all records</div>
+            <div class="card">
+                <div class="merge">
+                    <div class="create-button noselect" @click="showModalFunc">Create User</div>
+                    <div class="title noselect">You can see your all records</div>
+                </div>
             </div>
         </div>
         <div class="popup-container" :class="showModal == false ? `hide` : ``">
             <CreateUserPopup></CreateUserPopup>
         </div>
         <div class="information-container">
-            <h1>Information</h1>
+            <div class="card">
+                <div class="card-header">
+                    User List
+                </div>
+                <div class="card-body">
+                    <table>
+                        <tbody>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Surname</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Address</th>
+                                    <th>Image</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="user in users" :key="user.id">
+                                    <td> {{ user.name }} </td>
+                                    <td> {{ user.surname }} </td>
+                                    <td> {{ user.email }} </td>
+                                    <td> {{ user.phone }} </td>
+                                    <td> {{ user.address }} </td>
+                                    <td v-if="user.image != null">
+                                        <a v-bind:href="user.image.file_url" target="_blank" style="display: inline-block;">
+                                            <img style="width: 60px;" :src="user.image.file_url">
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -22,8 +58,15 @@ import CreateUserPopup from './create-user-popup.vue'
 export default {
     data() {
         return {
+            users: Object,
             showModal: false,
         }
+    },
+    mounted: function() {
+        let self = this;
+        axios.get(`/get-all-user`).then(function(response) {
+            self.users = response.data.data;
+        });
     },
     methods: {
         showModalFunc() {
@@ -38,6 +81,10 @@ export default {
 </script>
 
 <style lang="scss">
+    body {
+        background-color: #f4f6f9;
+    }
+
     .user-container {
         padding: 20px;
 
@@ -46,11 +93,11 @@ export default {
             height: 100%;
             padding: 10px;
             background-color: white;
-            border: 1px solid black;
             margin-bottom: 20px;
 
             & .merge {
                 display: flex;
+                padding: 10px;
 
                 & .title {
                     text-align: center;
@@ -74,7 +121,33 @@ export default {
         }
 
         & .information-container {
-            border: 1px solid black;
+
+            & table {
+                width: 100%;
+
+                & thead {
+
+                    & th {
+                        width: calc(100% / 6);
+                        border: 1px solid #e9e9e9;
+                        background: #f9f9f9;
+                        padding: 0.5em;
+                    }
+                }
+
+                & tbody {
+                    justify-content: center;
+                    align-items: center;
+                    display: contents;
+
+                    & td {
+                        width: calc(100% / 5);
+                        border: 1px solid #e9e9e9;
+                        background: #fff;
+                        padding: 0.5em;
+                    }
+                }
+            }
         }
     }
 

@@ -4,11 +4,21 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Users;
+use App\Models\UsersImages;
+use App\Models\UsersImagesTable;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class UsersController extends Controller
 {
     public function store(Request $request) {
+        $file = $request->file("images");
+        $fileId = Str::uuid();
+        if($file) {
+            $fileName = $file->getClientOriginalName();
+            $fileExtension = $file->getClientOriginalExtension();
+        }
+
         $users = new Users();
         $users->name = $request->name;
         $users->surname = $request->surname;
@@ -16,6 +26,26 @@ class UsersController extends Controller
         $users->phone = $request->phone;
         $users->address = $request->address;
         $users->save();
+
+        if($file) {
+            $images = new UsersImages();
+            $images->file_id = $fileId;
+            $images->file_name = $fileName;
+            $images->file_extension = $fileExtension;
+            $images->file_url = env("APP_URL") . "/" . "users_images". "/" . $users->id . "/" . $fileId . "." . $fileExtension;
+            $images->user_id = $users->id;
+            $images->save();
+        }
+
+        if(!file_exists(public_path("users_images"))) {
+            mkdir(public_path("users_images"), 0777, true);
+        }
+
+        if(!file_exists(public_path("users_images" . "/" . $users->id . "/"))) {
+            mkdir(public_path("users_images" . "/" . $users->id . "/"), 0777, true);
+        }
+
+        $file->move(public_path("users_images" . "/" . $users->id . "/"), $fileId . "." . $fileExtension);
 
         return [
             "status" => "0_SUCCESS",
@@ -34,6 +64,10 @@ class UsersController extends Controller
 
     public function getAllUser(Request $request) {
         $users = Users::all();
+        foreach ($users as $key => $user) {
+            $image = UsersImages::whereNull("deleted_at")->where("user_id", $user->id)->get();
+            $user->image = $image[0];
+        }
 
         return [
             "status" => "0_SUCCESS",
