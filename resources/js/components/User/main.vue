@@ -141,7 +141,7 @@ export default {
                     display: contents;
 
                     & td {
-                        width: calc(100% / 5);
+                        width: calc(100% / 6);
                         border: 1px solid #e9e9e9;
                         background: #fff;
                         padding: 0.5em;
