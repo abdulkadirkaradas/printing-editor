@@ -1,15 +1,15 @@
 <template>
     <div class="printing-container">
-        <div class="top-card noselect">
+        <div class="top-card noselect" style="display: none;">
             <div class="card">
                 <div class="merge">
-                    <div class="btn btn-md btn-info create-design" @click="activateDesigner">Create Design</div>
+                    <div class="btn btn-md btn-info create-design" @click="activatePage('create-page')">Create Design</div>
                     <div class="text">You can see your all designs</div>
                 </div>
             </div>
         </div>
 
-        <div class="bottom-card">
+        <div class="bottom-card" style="display: none;">
             <div class="card">
                 <div class="card-header">Design List</div>
                 <div class="card-body">
@@ -17,16 +17,24 @@
                         <tbody>
                             <thead>
                                 <tr>
-                                    <th>Id</th>
                                     <th>Name</th>
+                                    <th>Background Color</th>
                                     <th>Preview</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                <tr v-for="p in printings" :key="p.id">
+                                    <td>{{ p.name }}</td>
+                                    <td>
+                                        <div v-bind:style="{backgroundColor: p.bgcolor, height: 44 + 'px'}"></div>
+                                    </td>
+                                    <td> - </td>
+                                    <td>
+                                        <div class="btn btn-md btn-info" @click="activateEditor(p.id)">
+                                            ->
+                                        </div>
+                                    </td>
                                 </tr>
                             </tbody>
                         </tbody>
@@ -35,31 +43,50 @@
             </div>
         </div>
 
-        <div class="designer-container" :class="isDesignerActive == false ? `hide` : ``">
+        <!-- <div class="designer-container" :class="isDesignerActive == false ? `hide` : ``">
+            <Designer :printingId="printingId"></Designer>
+        </div>
+        <div class="create-page-container" :class="isCreatePageActive == false ? `hide` : ``">
+            <CreatePagePopup></CreatePagePopup>
+        </div> -->
+        <div class="designer-container">
             <Designer></Designer>
         </div>
-        <!-- <div class="designer-container">
-            <Designer></Designer>
-        </div> -->
     </div>
 </template>
 
 <script>
 import Designer from './designer.vue';
+import CreatePagePopup from './create-page-popup.vue';
 
 export default {
     data() {
         return {
-            isDesignerActive: "",
+            isDesignerActive: false,
+            isCreatePageActive: false,
+            printings: null,
+            printingId: null,
         }
     },
+    mounted: function() {
+        let self = this;
+        axios.get(`/get-all-printings`).then(function(response) {
+            self.printings = response.data.data;
+        });
+    },
     methods: {
-        activateDesigner() {
+        activatePage(value) {
+            this.isCreatePageActive = true;
+            $(".create-page-popup").fadeIn(300);
+        },
+        activateEditor(value) {
+            this.printingId = value;
+            $(".top-card, .bottom-card").hide();
             this.isDesignerActive = true;
         }
     },
     components: {
-        Designer
+        Designer, CreatePagePopup
     }
 }
 </script>
@@ -108,7 +135,7 @@ export default {
                         & thead {
 
                             & th {
-                                width: calc(100% / 3);
+                                width: calc(100% / 4);
                                 border: 1px solid #e9e9e9;
                                 background: #f9f9f9;
                                 padding: 0.5em;
@@ -121,10 +148,10 @@ export default {
                             display: contents;
 
                             & td {
-                                width: calc(100% / 3);
+                                width: calc(100% / 4);
                                 border: 1px solid #e9e9e9;
                                 background: #fff;
-                                padding: 0.5em;
+                                padding: 10px;
                             }
                         }
                     }

@@ -12,7 +12,7 @@ class Printings extends Model
     use SoftDeletes;
     use HasFactory;
 
-    public $table = 'users';
+    public $table = 'printings';
 
 	protected $keyType = 'string';
     public $incrementing = false;
@@ -32,7 +32,9 @@ class Printings extends Model
 
     protected $fillable = [
         'name',
-        'type',
+        'width',
+        'heigth',
+        'bg-color',
         'created_at',
         'updated_at',
         'deleted_at',

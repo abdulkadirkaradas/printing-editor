@@ -14,6 +14,12 @@
 <script>
 
 export default {
+    props: {
+        printingId: {
+            type: String,
+            default: null
+        }
+    },
     data() {
         return {
         }
