@@ -56,8 +56,8 @@
 </template>
 
 <script>
-import Designer from './designer.vue';
-import CreatePagePopup from './create-page-popup.vue';
+import Designer from './Designer/designer.vue';
+import CreatePagePopup from './Popups/create-page-popup.vue';
 
 export default {
     data() {

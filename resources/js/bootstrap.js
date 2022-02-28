@@ -1,4 +1,6 @@
 window._ = require('lodash');
+window.$ = window.jQuery = require('jquery');
+window.$ = $.extend(require('jquery-ui'));
 
 try {
     require('bootstrap');

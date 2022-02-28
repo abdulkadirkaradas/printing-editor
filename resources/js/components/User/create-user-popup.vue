@@ -1,5 +1,5 @@
 <template>
-    <div class="popup">
+    <div class="popup" v-if="isPopupShowed != true ? `hide` : `overlay`">
         <div class="popup-fade">
             <div class="merge">
                 <div class="popup-item popup-header">
@@ -59,6 +59,7 @@ export default {
     data() {
         return {
             file: "",
+            isPopupShowed: false
         }
     },
     methods: {
@@ -66,7 +67,8 @@ export default {
             $(".popup input").val("");
             $(".user-info, .next-button").show();
             $(".user-images, .previous-button, .save-button").hide();
-            $(".popup").fadeOut();
+            $(".popup").css("display","none");
+            this.isPopupShowed = false;
         },
         serializeForm() {
             var name = $("#name").val(),
@@ -106,7 +108,8 @@ export default {
 
     },
     mounted() {
-        $(".popup").fadeIn(300);
+        $(".popup").css("display","block");
+        this.isPopupShowed = true;
     },
     components: {
         Icon
@@ -231,6 +234,21 @@ export default {
                 }
             }
         }
+    }
+
+    .overlay {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        box-shadow: 0px 0px 0px 10000px rgb(0 0 0 / 80%);
+        z-index: 99999;
+        // display: none;
+    }
+
+    .hide {
+        display: none;
     }
 
     .noselect {

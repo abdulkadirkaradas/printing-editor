@@ -3,12 +3,12 @@
         <div class="card-container">
             <div class="card">
                 <div class="merge">
-                    <div class="create-button noselect" @click="showModalFunc">Create User</div>
+                    <div class="create-button noselect" @click="showPopup">Create User</div>
                     <div class="title noselect">You can see your all records</div>
                 </div>
             </div>
         </div>
-        <div class="popup-container" :class="showModal == false ? `hide` : ``">
+        <div class="popup-container" :class="isPopupShowed == false ? `hide` : ``">
             <CreateUserPopup></CreateUserPopup>
         </div>
         <div class="information-container">
@@ -59,7 +59,7 @@ export default {
     data() {
         return {
             users: Object,
-            showModal: false,
+            isPopupShowed: false,
         }
     },
     mounted: function() {
@@ -69,9 +69,9 @@ export default {
         });
     },
     methods: {
-        showModalFunc() {
-            this.showModal = true;
-            $(".popup").fadeIn(300);
+        showPopup() {
+            $(".popup").css("display","block");
+            this.isPopupShowed = true;
         }
     },
     components: {

@@ -55,6 +55,7 @@ class UsersController extends Controller
 
     public function findUser(Request $request) {
         $user = Users::find($request->id);
+        $user = UsersImages::where("deleted_at")->where("user_id", $user->id)->get();
 
         return [
             "status" => "0_SUCCESS",

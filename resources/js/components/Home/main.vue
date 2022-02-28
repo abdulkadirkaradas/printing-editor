@@ -2,7 +2,7 @@
     <div class="content-app">
         <Menu @SelectedPage="selectedPage"></Menu>
         <div class="other-pages">
-            <PrintingActions></PrintingActions>
+            <UserActions></UserActions>
         </div>
         <!-- <div class="other-pages" :class="selectedPage == `Dashboard` ? `hide` : null">
             <div v-if="selectedPageName == `UserActions`">

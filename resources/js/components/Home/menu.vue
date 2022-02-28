@@ -19,6 +19,7 @@ export default {
 </script>
 
 <style lang="scss">
+    @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
     .aside-menu {
         min-width: 250px;
         min-height: 100%;
@@ -34,7 +35,7 @@ export default {
             cursor: pointer;
             border: 1px solid blue;
             margin-bottom: 50px;
-            font: normal normal normal 18px/16px Josefin Sans;
+            font: normal normal normal 18px/16px "Open Sans";
             padding: 50px 0 50px 0;
         }
     }

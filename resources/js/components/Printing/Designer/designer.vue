@@ -2,16 +2,22 @@
     <div class="design-container">
         <div class="inner-design-container">
             <div class="top-bar">
+                <div class="page-actions"></div>
+                <div class="design-actions"></div>
             </div>
-            <div class="side-bar"></div>
+            <div class="sidebar">
+                <Toolbar></Toolbar>
+            </div>
             <div class="content-area">
-                <div class="inner-content-area"></div>
+                <Editor></Editor>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import Editor from './Editor/editor.vue'
+import Toolbar from './Toolbar/toolbar.vue'
 
 export default {
     props: {
@@ -27,6 +33,7 @@ export default {
     methods: {
     },
     components: {
+        Editor, Toolbar
     }
 }
 </script>
@@ -45,20 +52,32 @@ export default {
                 width: 100%;
                 height: 12vh;
                 border: 1px solid black;
+                padding: 10px;
 
-                & .create-new-page {
-                    width: 75px;
-                    height: 75px;
+                & .page-actions {
+                    width: 20%;
+                    height: 100%;
+                    border: 1px solid black;
+                    position: relative;
+                    float: left;
+                }
 
+                & .design-actions {
+                    width: 80%;
+                    height: 100%;
+                    border: 1px solid black;
+                    position: relative;
+                    float: left;
                 }
             }
 
-            & .side-bar {
+            & .sidebar {
                 width: 15%;
                 height: 86vh;
                 border: 1px solid black;
                 position: relative;
                 float: left;
+                padding: 10px;
             }
 
             & .content-area {
@@ -73,14 +92,6 @@ export default {
                 justify-content: center;
                 align-items: center;
                 display: flex;
-
-                & .inner-content-area {
-                    width: 100%;
-                    height: 100%;
-                    background-color: white;
-                    -webkit-box-shadow: 1px 1px 7px 2px #B0B0B0;
-                    box-shadow: 1px 1px 7px 2px #B0B0B0;
-                }
             }
         }
     }
