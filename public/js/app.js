@@ -5525,6 +5525,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+var _data$mounted$methods;
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -5565,7 +5569,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_data$mounted$methods = {
   data: function data() {
     return {
       chosenColor: "#000000"
@@ -5577,7 +5581,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     hide: function hide() {
       jquery__WEBPACK_IMPORTED_MODULE_0___default()(".create-page-popup input").val("");
-      jquery__WEBPACK_IMPORTED_MODULE_0___default()(".create-page-popup").fadeOut();
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()(".create-page-popup").css("display", "none");
     },
     chooseColor: function chooseColor() {
       jquery__WEBPACK_IMPORTED_MODULE_0___default()("#project_b_color").click();
@@ -5603,9 +5607,11 @@ __webpack_require__.r(__webpack_exports__);
       });
       this.hide();
     }
-  },
-  components: {}
-});
+  }
+}, _defineProperty(_data$mounted$methods, "mounted", function mounted() {
+  jquery__WEBPACK_IMPORTED_MODULE_0___default()(".create-page-popup").css("display", "block");
+  this.isPopupShowed = true;
+}), _defineProperty(_data$mounted$methods, "components", {}), _data$mounted$methods);
 
 /***/ }),
 
@@ -5699,11 +5705,11 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     activatePage: function activatePage(value) {
       this.isCreatePageActive = true;
-      $(".create-page-popup").fadeIn(300);
+      $(".create-page-popup").css("display", "block");
     },
     activateEditor: function activateEditor(value) {
       this.printingId = value;
-      $(".top-card, .bottom-card").hide();
+      $(".top-card, .bottom-card").css("display", "none");
       this.isDesignerActive = true;
     }
   },
@@ -42139,7 +42145,7 @@ var render = function () {
     [
       _c("Menu", { on: { SelectedPage: _vm.selectedPage } }),
       _vm._v(" "),
-      _c("div", { staticClass: "other-pages" }, [_c("UserActions")], 1),
+      _c("div", { staticClass: "other-pages" }, [_c("PrintingActions")], 1),
     ],
     1
   )
@@ -42517,92 +42523,102 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "printing-container" }, [
-    _c(
-      "div",
-      { staticClass: "top-card noselect", staticStyle: { display: "none" } },
-      [
-        _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "merge" }, [
-            _c(
-              "div",
-              {
-                staticClass: "btn btn-md btn-info create-design",
-                on: {
-                  click: function ($event) {
-                    return _vm.activatePage("create-page")
-                  },
+    _c("div", { staticClass: "top-card noselect" }, [
+      _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "merge" }, [
+          _c(
+            "div",
+            {
+              staticClass: "btn btn-md btn-info create-design",
+              on: {
+                click: function ($event) {
+                  return _vm.activatePage("create-page")
                 },
               },
-              [_vm._v("Create Design")]
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "text" }, [
-              _vm._v("You can see your all designs"),
+            },
+            [_vm._v("Create Design")]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "text" }, [
+            _vm._v("You can see your all designs"),
+          ]),
+        ]),
+      ]),
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "bottom-card" }, [
+      _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "card-header" }, [_vm._v("Design List")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body" }, [
+          _c("table", [
+            _c("tbody", [
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.printings, function (p) {
+                  return _c("tr", { key: p.id }, [
+                    _c("td", [_vm._v(_vm._s(p.name))]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("div", {
+                        style: {
+                          backgroundColor: p.bgcolor,
+                          height: 44 + "px",
+                        },
+                      }),
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(" - ")]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "div",
+                        {
+                          staticClass: "btn btn-md btn-info",
+                          on: {
+                            click: function ($event) {
+                              return _vm.activateEditor(p.id)
+                            },
+                          },
+                        },
+                        [
+                          _vm._v(
+                            "\n                                        ->\n                                    "
+                          ),
+                        ]
+                      ),
+                    ]),
+                  ])
+                }),
+                0
+              ),
             ]),
           ]),
         ]),
-      ]
+      ]),
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "designer-container",
+        class: _vm.isDesignerActive == false ? "hide" : "",
+      },
+      [_c("Designer", { attrs: { printingId: _vm.printingId } })],
+      1
     ),
     _vm._v(" "),
     _c(
       "div",
-      { staticClass: "bottom-card", staticStyle: { display: "none" } },
-      [
-        _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-header" }, [_vm._v("Design List")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c("table", [
-              _c("tbody", [
-                _vm._m(0),
-                _vm._v(" "),
-                _c(
-                  "tbody",
-                  _vm._l(_vm.printings, function (p) {
-                    return _c("tr", { key: p.id }, [
-                      _c("td", [_vm._v(_vm._s(p.name))]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c("div", {
-                          style: {
-                            backgroundColor: p.bgcolor,
-                            height: 44 + "px",
-                          },
-                        }),
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(" - ")]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c(
-                          "div",
-                          {
-                            staticClass: "btn btn-md btn-info",
-                            on: {
-                              click: function ($event) {
-                                return _vm.activateEditor(p.id)
-                              },
-                            },
-                          },
-                          [
-                            _vm._v(
-                              "\n                                        ->\n                                    "
-                            ),
-                          ]
-                        ),
-                      ]),
-                    ])
-                  }),
-                  0
-                ),
-              ]),
-            ]),
-          ]),
-        ]),
-      ]
+      {
+        staticClass: "create-page-container",
+        class: _vm.isCreatePageActive == false ? "hide" : "",
+      },
+      [_c("CreatePagePopup")],
+      1
     ),
-    _vm._v(" "),
-    _c("div", { staticClass: "designer-container" }, [_c("Designer")], 1),
   ])
 }
 var staticRenderFns = [

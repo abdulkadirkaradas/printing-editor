@@ -1,6 +1,6 @@
 <template>
     <div class="printing-container">
-        <div class="top-card noselect" style="display: none;">
+        <div class="top-card noselect">
             <div class="card">
                 <div class="merge">
                     <div class="btn btn-md btn-info create-design" @click="activatePage('create-page')">Create Design</div>
@@ -9,7 +9,7 @@
             </div>
         </div>
 
-        <div class="bottom-card" style="display: none;">
+        <div class="bottom-card">
             <div class="card">
                 <div class="card-header">Design List</div>
                 <div class="card-body">
@@ -43,15 +43,15 @@
             </div>
         </div>
 
-        <!-- <div class="designer-container" :class="isDesignerActive == false ? `hide` : ``">
+        <div class="designer-container" :class="isDesignerActive == false ? `hide` : ``">
             <Designer :printingId="printingId"></Designer>
         </div>
         <div class="create-page-container" :class="isCreatePageActive == false ? `hide` : ``">
             <CreatePagePopup></CreatePagePopup>
-        </div> -->
-        <div class="designer-container">
-            <Designer></Designer>
         </div>
+        <!-- <div class="designer-container">
+            <Designer></Designer>
+        </div> -->
     </div>
 </template>
 
@@ -77,11 +77,11 @@ export default {
     methods: {
         activatePage(value) {
             this.isCreatePageActive = true;
-            $(".create-page-popup").fadeIn(300);
+            $(".create-page-popup").css("display","block");
         },
         activateEditor(value) {
             this.printingId = value;
-            $(".top-card, .bottom-card").hide();
+            $(".top-card, .bottom-card").css("display","none");
             this.isDesignerActive = true;
         }
     },

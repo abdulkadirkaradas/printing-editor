@@ -52,7 +52,7 @@ export default {
     methods: {
         hide() {
             $(".create-page-popup input").val("");
-            $(".create-page-popup").fadeOut();
+            $(".create-page-popup").css("display","none");
         },
         chooseColor() {
             $("#project_b_color").click();
@@ -81,6 +81,10 @@ export default {
             });
             this.hide();
         }
+    },
+    mounted() {
+        $(".create-page-popup").css("display","block");
+        this.isPopupShowed = true;
     },
     components: {
     }
