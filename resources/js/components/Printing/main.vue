@@ -19,6 +19,8 @@
                                 <tr>
                                     <th>Name</th>
                                     <th>Background Color</th>
+                                    <th>Width (wv)</th>
+                                    <th>Height (wh)</th>
                                     <th>Preview</th>
                                     <th>Action</th>
                                 </tr>
@@ -29,6 +31,8 @@
                                     <td>
                                         <div v-bind:style="{backgroundColor: p.bgcolor, height: 44 + 'px'}"></div>
                                     </td>
+                                    <td>{{ p.width }}</td>
+                                    <td>{{ p.height }}</td>
                                     <td> - </td>
                                     <td>
                                         <div class="btn btn-md btn-info" @click="activateEditor(p.id)">
@@ -71,6 +75,7 @@ export default {
     mounted: function() {
         let self = this;
         axios.get(`/get-all-printings`).then(function(response) {
+            console.log(response.data.data);
             self.printings = response.data.data;
         });
     },

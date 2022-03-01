@@ -5685,6 +5685,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -5699,6 +5703,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var self = this;
     axios.get("/get-all-printings").then(function (response) {
+      console.log(response.data.data);
       self.printings = response.data.data;
     });
   },
@@ -42570,6 +42575,10 @@ var render = function () {
                       }),
                     ]),
                     _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(p.width))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(p.height))]),
+                    _vm._v(" "),
                     _c("td", [_vm._v(" - ")]),
                     _vm._v(" "),
                     _c("td", [
@@ -42631,6 +42640,10 @@ var staticRenderFns = [
         _c("th", [_vm._v("Name")]),
         _vm._v(" "),
         _c("th", [_vm._v("Background Color")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Width (wv)")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Height (wh)")]),
         _vm._v(" "),
         _c("th", [_vm._v("Preview")]),
         _vm._v(" "),
