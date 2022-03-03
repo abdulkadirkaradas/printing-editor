@@ -67,13 +67,10 @@ export default {
             height = $("#page_height").val(),
             bgcolor = this.chosenColor;
 
-            var vw = width * (100 / document.documentElement.clientWidth);
-            var vh = height * (100 / document.documentElement.clientHeight);
-
             let formData = new FormData();
             formData.append("name", name);
-            formData.append("width", vw);
-            formData.append("height", vh);
+            formData.append("width", width);
+            formData.append("height", height);
             formData.append("bgcolor", bgcolor);
 
             axios.post(`/store-printings`, formData).then(function(response) {

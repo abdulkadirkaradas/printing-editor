@@ -5376,10 +5376,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 ;
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    printingDetail: {
+      type: Object,
+      "default": null
+    }
+  },
   data: function data() {
     return {};
   },
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    var properties = this.printingDetail;
+    var canvas = document.getElementById("editor");
+    var ctx = canvas.getContext("2d");
+    ctx.canvas.width = properties.width;
+    ctx.canvas.height = properties.height;
+    ctx.fillStyle = properties.bgcolor;
+    ctx.fillRect(0, 0, properties.width, properties.height);
+  },
   methods: {},
   components: {}
 });
@@ -5413,42 +5427,30 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      draggableItems: [{
+      items: [{
         id: 0,
         title: "Name",
-        list: 1,
-        "class": "data",
-        draggable: true
+        "class": "data"
       }, {
         id: 1,
         title: "Surname",
-        list: 1,
-        "class": "data",
-        draggable: true
+        "class": "data"
       }, {
         id: 2,
         title: "Email",
-        list: 1,
-        "class": "data",
-        draggable: true
+        "class": "data"
       }, {
         id: 3,
         title: "Phone",
-        list: 1,
-        "class": "data",
-        draggable: true
+        "class": "data"
       }, {
         id: 4,
         title: "Address",
-        list: 1,
-        "class": "data",
-        draggable: true
+        "class": "data"
       }, {
         id: 5,
         title: "Image",
-        list: 1,
-        "class": "data",
-        draggable: true
+        "class": "data"
       }]
     };
   },
@@ -5498,12 +5500,34 @@ __webpack_require__.r(__webpack_exports__);
     printingId: {
       type: String,
       "default": null
+    },
+    printingDetail: {
+      type: Object,
+      "default": null
     }
   },
   data: function data() {
-    return {};
+    return {
+      printingName: null
+    };
   },
-  methods: {},
+  mounted: function mounted() {
+    this.findPrinting();
+  },
+  methods: {
+    findPrinting: function findPrinting() {
+      var self = this;
+      axios.get("/find-printing", {
+        params: {
+          id: self.printingId
+        }
+      }).then(function (response) {
+        // console.log(response.data.data);
+        self.printingDetail = response.data.data;
+        self.printingName = response.data.data.name;
+      });
+    }
+  },
   components: {
     Editor: _Editor_editor_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     Toolbar: _Toolbar_toolbar_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
@@ -5595,12 +5619,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           width = jquery__WEBPACK_IMPORTED_MODULE_0___default()("#page_width").val(),
           height = jquery__WEBPACK_IMPORTED_MODULE_0___default()("#page_height").val(),
           bgcolor = this.chosenColor;
-      var vw = width * (100 / document.documentElement.clientWidth);
-      var vh = height * (100 / document.documentElement.clientHeight);
       var formData = new FormData();
       formData.append("name", name);
-      formData.append("width", vw);
-      formData.append("height", vh);
+      formData.append("width", width);
+      formData.append("height", height);
       formData.append("bgcolor", bgcolor);
       axios.post("/store-printings", formData).then(function (response) {
         console.log(response);
@@ -5686,9 +5708,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -5703,7 +5722,6 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var self = this;
     axios.get("/get-all-printings").then(function (response) {
-      console.log(response.data.data);
       self.printings = response.data.data;
     });
   },
@@ -11165,7 +11183,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".editor-container {\n  width: 100%;\n  height: 100%;\n  background-color: white;\n  box-shadow: 1px 1px 7px 2px #B0B0B0;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".editor-container {\n  width: 100%;\n  height: 100%;\n  justify-content: center;\n  align-items: center;\n  display: flex;\n}\n.editor-container canvas {\n  position: relative;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -11213,7 +11231,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".design-container {\n  width: 100%;\n  position: relative;\n}\n.design-container .inner-design-container {\n  width: 100%;\n  position: absolute;\n}\n.design-container .inner-design-container .top-bar {\n  position: relative;\n  width: 100%;\n  height: 12vh;\n  border: 1px solid black;\n  padding: 10px;\n}\n.design-container .inner-design-container .top-bar .page-actions {\n  width: 20%;\n  height: 100%;\n  border: 1px solid black;\n  position: relative;\n  float: left;\n}\n.design-container .inner-design-container .top-bar .design-actions {\n  width: 80%;\n  height: 100%;\n  border: 1px solid black;\n  position: relative;\n  float: left;\n}\n.design-container .inner-design-container .sidebar {\n  width: 15%;\n  height: 86vh;\n  border: 1px solid black;\n  position: relative;\n  float: left;\n  padding: 10px;\n}\n.design-container .inner-design-container .content-area {\n  width: 85%;\n  height: 86vh;\n  padding: 20px;\n  border: 1px solid black;\n  background-color: #ebebeb;\n  position: relative;\n  float: left;\n  justify-content: center;\n  align-items: center;\n  display: flex;\n}\n.noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".design-container {\n  width: 100%;\n  position: relative;\n}\n.design-container .inner-design-container {\n  width: 100%;\n  position: absolute;\n}\n.design-container .inner-design-container .top-bar {\n  position: relative;\n  width: 100%;\n  height: 12vh;\n  border: 1px solid black;\n  padding: 10px;\n}\n.design-container .inner-design-container .top-bar .project-name {\n  width: 20%;\n  height: 100%;\n  border: 1px solid black;\n  position: relative;\n  float: left;\n  justify-content: center;\n  align-items: center;\n  display: flex;\n}\n.design-container .inner-design-container .top-bar .design-actions {\n  width: 80%;\n  height: 100%;\n  border: 1px solid black;\n  position: relative;\n  float: left;\n}\n.design-container .inner-design-container .sidebar {\n  width: 15%;\n  height: 86vh;\n  border: 1px solid black;\n  position: relative;\n  float: left;\n  padding: 10px;\n}\n.design-container .inner-design-container .content-area {\n  width: 85%;\n  height: 86vh;\n  padding: 20px;\n  border: 1px solid black;\n  background-color: #ebebeb;\n  position: relative;\n  float: left;\n  justify-content: center;\n  align-items: center;\n  display: flex;\n}\n.noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -42255,12 +42273,18 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", {
-    staticClass: "editor-container",
-    attrs: { id: "editorContainer" },
-  })
+  return _vm._m(0)
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "editor-container" }, [
+      _c("canvas", { attrs: { id: "editor" } }),
+    ])
+  },
+]
 render._withStripped = true
 
 
@@ -42285,22 +42309,16 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "toolbar noselect-text" }, [
     _c("div", { staticClass: "description" }, [
-      _vm._v(" Please drag items to editor screen"),
+      _vm._v(" Please click the button to add to the editor."),
     ]),
     _vm._v(" "),
     _c(
       "div",
       { staticClass: "drag-list" },
-      _vm._l(_vm.draggableItems, function (item) {
-        return _c(
-          "div",
-          {
-            key: item.id,
-            class: item.class,
-            attrs: { draggable: item.draggable },
-          },
-          [_vm._v("\n            " + _vm._s(item.title) + "\n        ")]
-        )
+      _vm._l(_vm.items, function (item) {
+        return _c("div", { key: item.id, class: item.class }, [
+          _vm._v("\n            " + _vm._s(item.title) + "\n        "),
+        ])
       }),
       0
     ),
@@ -42331,26 +42349,30 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "design-container" }, [
     _c("div", { staticClass: "inner-design-container" }, [
-      _vm._m(0),
+      _c("div", { staticClass: "top-bar" }, [
+        _c("div", { staticClass: "project-name" }, [
+          _vm._v(" " + _vm._s(_vm.printingName) + " "),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "design-actions" }),
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "sidebar" }, [_c("Toolbar")], 1),
       _vm._v(" "),
-      _c("div", { staticClass: "content-area" }, [_c("Editor")], 1),
+      _c(
+        "div",
+        { staticClass: "content-area" },
+        [
+          _vm.printingDetail != null
+            ? _c("Editor", { attrs: { printingDetail: _vm.printingDetail } })
+            : _vm._e(),
+        ],
+        1
+      ),
     ]),
   ])
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "top-bar" }, [
-      _c("div", { staticClass: "page-actions" }),
-      _vm._v(" "),
-      _c("div", { staticClass: "design-actions" }),
-    ])
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -42615,7 +42637,11 @@ var render = function () {
         staticClass: "designer-container",
         class: _vm.isDesignerActive == false ? "hide" : "",
       },
-      [_c("Designer", { attrs: { printingId: _vm.printingId } })],
+      [
+        _vm.isDesignerActive != false
+          ? _c("Designer", { attrs: { printingId: _vm.printingId } })
+          : _vm._e(),
+      ],
       1
     ),
     _vm._v(" "),

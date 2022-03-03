@@ -48,14 +48,11 @@
         </div>
 
         <div class="designer-container" :class="isDesignerActive == false ? `hide` : ``">
-            <Designer :printingId="printingId"></Designer>
+            <Designer :printingId="printingId" v-if="isDesignerActive != false"></Designer>
         </div>
         <div class="create-page-container" :class="isCreatePageActive == false ? `hide` : ``">
             <CreatePagePopup></CreatePagePopup>
         </div>
-        <!-- <div class="designer-container">
-            <Designer></Designer>
-        </div> -->
     </div>
 </template>
 
@@ -75,7 +72,6 @@ export default {
     mounted: function() {
         let self = this;
         axios.get(`/get-all-printings`).then(function(response) {
-            console.log(response.data.data);
             self.printings = response.data.data;
         });
     },
@@ -88,7 +84,7 @@ export default {
             this.printingId = value;
             $(".top-card, .bottom-card").css("display","none");
             this.isDesignerActive = true;
-        }
+        },
     },
     components: {
         Designer, CreatePagePopup
