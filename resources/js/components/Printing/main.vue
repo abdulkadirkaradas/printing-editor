@@ -19,8 +19,8 @@
                                 <tr>
                                     <th>Name</th>
                                     <th>Background Color</th>
-                                    <th>Width (wv)</th>
-                                    <th>Height (wh)</th>
+                                    <th>Width (px)</th>
+                                    <th>Height (px)</th>
                                     <th>Preview</th>
                                     <th>Action</th>
                                 </tr>
@@ -83,6 +83,8 @@ export default {
         activateEditor(value) {
             this.printingId = value;
             $(".top-card, .bottom-card").css("display","none");
+            $(".aside-menu").css("display","none");
+            $(".main-container").css("margin-left","0px");
             this.isDesignerActive = true;
         },
     },
@@ -94,11 +96,12 @@ export default {
 
 <style lang="scss">
     html, body {
-        height: 100%;
+        width: 100vw;
+        height: 100vh;
     }
 
     .printing-container {
-        height: 100%;
+        height: 100vh;
 
         & .top-card {
             padding: 10px;
@@ -163,6 +166,7 @@ export default {
 
     .designer-container {
         width: 100%;
+        height: 100vh;
         padding: 1vh;
         position: relative;
     }

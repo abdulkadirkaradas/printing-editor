@@ -1,6 +1,6 @@
 <template>
     <div class="content-app">
-        <Menu @SelectedPage="selectedPage"></Menu>
+        <Menu class="side-menu" @SelectedPage="selectedPage"></Menu>
         <div class="other-pages">
             <PrintingActions></PrintingActions>
         </div>
@@ -51,7 +51,8 @@ export default {
     }
 
     .other-pages {
-        width: 100% !important;
+        float: right;
+        width: 100vw !important;
     }
 
     .hide {

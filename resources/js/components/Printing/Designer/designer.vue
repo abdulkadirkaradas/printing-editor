@@ -25,14 +25,15 @@ export default {
             type: String,
             default: null
         },
-        printingDetail: {
-            type: Object,
-            default: null
-        }
+        // printingDetail: {
+        //     type: Object,
+        //     default: null
+        // }
     },
     data() {
         return {
-            printingName: null
+            printingName: null,
+            printingDetail: null
         }
     },
     mounted() {
@@ -67,13 +68,14 @@ export default {
                 position: relative;
                 width: 100%;
                 height: 12vh;
-                border: 1px solid black;
-                padding: 10px;
+                border: 0.1vw solid black;
+                padding: 0.7vw;
 
                 & .project-name {
                     width: 20%;
                     height: 100%;
-                    border: 1px solid black;
+                    border: 0.1vw solid black;
+                    font-size: 1.2vw;
                     position: relative;
                     float: left;
                     justify-content: center;
@@ -84,7 +86,7 @@ export default {
                 & .design-actions {
                     width: 80%;
                     height: 100%;
-                    border: 1px solid black;
+                    border: 0.1vw solid black;
                     position: relative;
                     float: left;
                 }
@@ -93,17 +95,17 @@ export default {
             & .sidebar {
                 width: 15%;
                 height: 86vh;
-                border: 1px solid black;
+                border: 0.1vw solid black;
                 position: relative;
                 float: left;
-                padding: 10px;
+                padding: 0.7vw;
             }
 
             & .content-area {
                 width: 85%;
                 height: 86vh;
-                padding: 20px;
-                border: 1px solid black;
+                padding: 1.4vw;
+                border: 0.1vw solid black;
                 background-color: #ebebeb;
                 position: relative;
                 float: left;

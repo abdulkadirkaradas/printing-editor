@@ -63,23 +63,26 @@ export default {
 <style lang="scss">
     .toolbar {
         height: 100%;
-        border: 1px solid black;
-        padding: 10px;
+        border: 0.1vw solid black;
+        padding: 0.7vw;
         position: relative;
 
         & .description {
             text-align: center;
-            margin-bottom: 10px;
-            border: 1px solid black;
+            margin-bottom: 0.7vw;
+            border: 0.1vw solid black;
             border-style: dashed;
+            font-size: 1.2vw;
         }
 
         & .data {
-            padding: 10px;
-            border: 1px solid black;
-            margin-bottom: 10px;
+            position: relative;
+            padding: 0.7vw;
+            margin-bottom: 0.7vw;
+            border: 0.1vw solid black;
             cursor: pointer;
             text-align: center;
+            font-size: 1.2vw;
         }
     }
 

@@ -5374,7 +5374,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-;
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     printingDetail: {
@@ -5386,15 +5385,44 @@ __webpack_require__.r(__webpack_exports__);
     return {};
   },
   mounted: function mounted() {
-    var properties = this.printingDetail;
-    var canvas = document.getElementById("editor");
-    var ctx = canvas.getContext("2d");
-    ctx.canvas.width = properties.width;
-    ctx.canvas.height = properties.height;
-    ctx.fillStyle = properties.bgcolor;
-    ctx.fillRect(0, 0, properties.width, properties.height);
+    this.drawCanvas();
   },
-  methods: {},
+  methods: {
+    drawCanvas: function drawCanvas() {
+      var properties = this.printingDetail;
+      var editor = document.getElementById("editorContainer");
+      var canvas = document.getElementById("editor");
+      var ctx = canvas.getContext("2d");
+      var propertyArray = {
+        "editorWidth": editor.clientWidth,
+        "editorHeight": editor.clientHeight,
+        "propWidth": properties.width,
+        "propHeight": properties.height
+      };
+      var newScale = this.decreaseExtraSpace(propertyArray);
+      console.log(newScale);
+      ctx.canvas.width = properties.width;
+      ctx.canvas.height = properties.height; // ctx.canvas.width = newScale.newWidth;
+      // ctx.canvas.height = newScale.newHeight;
+
+      ctx.fillStyle = properties.bgcolor;
+      ctx.fillRect(0, 0, properties.width, properties.height); // ctx.fillRect(0, 0, newScale.newWidth, newScale.newHeight);
+    },
+    decreaseExtraSpace: function decreaseExtraSpace(args) {
+      var editorWidth = args.editorWidth;
+      var editorHeight = args.editorHeight;
+      var propWidth = args.propWidth;
+      var propHeight = args.propHeight;
+      var finalWidth = propWidth > editorWidth ? propWidth * 30 / 100 : propWidth;
+      var finalHeight = propHeight > editorHeight ? propHeight * 30 / 100 : propHeight;
+      return {
+        "newWidth": finalWidth,
+        "newHeight": finalHeight,
+        "originalWidth": args.propWidth,
+        "originalHeight": args.propHeight
+      };
+    }
+  },
   components: {}
 });
 
@@ -5500,15 +5528,16 @@ __webpack_require__.r(__webpack_exports__);
     printingId: {
       type: String,
       "default": null
-    },
-    printingDetail: {
-      type: Object,
-      "default": null
-    }
+    } // printingDetail: {
+    //     type: Object,
+    //     default: null
+    // }
+
   },
   data: function data() {
     return {
-      printingName: null
+      printingName: null,
+      printingDetail: null
     };
   },
   mounted: function mounted() {
@@ -5733,6 +5762,8 @@ __webpack_require__.r(__webpack_exports__);
     activateEditor: function activateEditor(value) {
       this.printingId = value;
       $(".top-card, .bottom-card").css("display", "none");
+      $(".aside-menu").css("display", "none");
+      $(".main-container").css("margin-left", "0px");
       this.isDesignerActive = true;
     }
   },
@@ -11134,7 +11165,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "html {\n  background-color: #F4F6F9;\n}\n.other-pages {\n  width: 100% !important;\n}\n.hide {\n  display: none !important;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "html {\n  background-color: #F4F6F9;\n}\n.other-pages {\n  float: right;\n  width: 100vw !important;\n}\n.hide {\n  display: none !important;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -11183,7 +11214,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".editor-container {\n  width: 100%;\n  height: 100%;\n  justify-content: center;\n  align-items: center;\n  display: flex;\n}\n.editor-container canvas {\n  position: relative;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".editor-container {\n  width: 100%;\n  height: 100%;\n  justify-content: center;\n  align-items: center;\n  display: flex;\n  overflow: scroll;\n  overflow-x: scroll;\n}\n.editor-container canvas {\n  position: relative;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -11207,7 +11238,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".toolbar {\n  height: 100%;\n  border: 1px solid black;\n  padding: 10px;\n  position: relative;\n}\n.toolbar .description {\n  text-align: center;\n  margin-bottom: 10px;\n  border: 1px solid black;\n  border-style: dashed;\n}\n.toolbar .data {\n  padding: 10px;\n  border: 1px solid black;\n  margin-bottom: 10px;\n  cursor: pointer;\n  text-align: center;\n}\n.noselect-text {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".toolbar {\n  height: 100%;\n  border: 0.1vw solid black;\n  padding: 0.7vw;\n  position: relative;\n}\n.toolbar .description {\n  text-align: center;\n  margin-bottom: 0.7vw;\n  border: 0.1vw solid black;\n  border-style: dashed;\n  font-size: 1.2vw;\n}\n.toolbar .data {\n  position: relative;\n  padding: 0.7vw;\n  margin-bottom: 0.7vw;\n  border: 0.1vw solid black;\n  cursor: pointer;\n  text-align: center;\n  font-size: 1.2vw;\n}\n.noselect-text {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -11231,7 +11262,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".design-container {\n  width: 100%;\n  position: relative;\n}\n.design-container .inner-design-container {\n  width: 100%;\n  position: absolute;\n}\n.design-container .inner-design-container .top-bar {\n  position: relative;\n  width: 100%;\n  height: 12vh;\n  border: 1px solid black;\n  padding: 10px;\n}\n.design-container .inner-design-container .top-bar .project-name {\n  width: 20%;\n  height: 100%;\n  border: 1px solid black;\n  position: relative;\n  float: left;\n  justify-content: center;\n  align-items: center;\n  display: flex;\n}\n.design-container .inner-design-container .top-bar .design-actions {\n  width: 80%;\n  height: 100%;\n  border: 1px solid black;\n  position: relative;\n  float: left;\n}\n.design-container .inner-design-container .sidebar {\n  width: 15%;\n  height: 86vh;\n  border: 1px solid black;\n  position: relative;\n  float: left;\n  padding: 10px;\n}\n.design-container .inner-design-container .content-area {\n  width: 85%;\n  height: 86vh;\n  padding: 20px;\n  border: 1px solid black;\n  background-color: #ebebeb;\n  position: relative;\n  float: left;\n  justify-content: center;\n  align-items: center;\n  display: flex;\n}\n.noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".design-container {\n  width: 100%;\n  position: relative;\n}\n.design-container .inner-design-container {\n  width: 100%;\n  position: absolute;\n}\n.design-container .inner-design-container .top-bar {\n  position: relative;\n  width: 100%;\n  height: 12vh;\n  border: 0.1vw solid black;\n  padding: 0.7vw;\n}\n.design-container .inner-design-container .top-bar .project-name {\n  width: 20%;\n  height: 100%;\n  border: 0.1vw solid black;\n  font-size: 1.2vw;\n  position: relative;\n  float: left;\n  justify-content: center;\n  align-items: center;\n  display: flex;\n}\n.design-container .inner-design-container .top-bar .design-actions {\n  width: 80%;\n  height: 100%;\n  border: 0.1vw solid black;\n  position: relative;\n  float: left;\n}\n.design-container .inner-design-container .sidebar {\n  width: 15%;\n  height: 86vh;\n  border: 0.1vw solid black;\n  position: relative;\n  float: left;\n  padding: 0.7vw;\n}\n.design-container .inner-design-container .content-area {\n  width: 85%;\n  height: 86vh;\n  padding: 1.4vw;\n  border: 0.1vw solid black;\n  background-color: #ebebeb;\n  position: relative;\n  float: left;\n  justify-content: center;\n  align-items: center;\n  display: flex;\n}\n.noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -11279,7 +11310,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "html, body {\n  height: 100%;\n}\n.printing-container {\n  height: 100%;\n}\n.printing-container .top-card {\n  padding: 10px;\n}\n.printing-container .top-card .card .merge {\n  align-items: center;\n  display: flex;\n  padding: 10px;\n}\n.printing-container .top-card .card .merge .create-design {\n  margin-right: 20px;\n}\n.printing-container .top-card .card .merge .text {\n  font-size: 18px;\n}\n.printing-container .bottom-card {\n  padding: 10px;\n}\n.printing-container .bottom-card .card .card-body table {\n  width: 100%;\n}\n.printing-container .bottom-card .card .card-body table thead th {\n  width: 25%;\n  border: 1px solid #e9e9e9;\n  background: #f9f9f9;\n  padding: 0.5em;\n}\n.printing-container .bottom-card .card .card-body table tbody {\n  justify-content: center;\n  align-items: center;\n  display: contents;\n}\n.printing-container .bottom-card .card .card-body table tbody td {\n  width: 25%;\n  border: 1px solid #e9e9e9;\n  background: #fff;\n  padding: 10px;\n}\n.designer-container {\n  width: 100%;\n  padding: 1vh;\n  position: relative;\n}\n.hide {\n  display: none !important;\n}\n.noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "html, body {\n  width: 100vw;\n  height: 100vh;\n}\n.printing-container {\n  height: 100vh;\n}\n.printing-container .top-card {\n  padding: 10px;\n}\n.printing-container .top-card .card .merge {\n  align-items: center;\n  display: flex;\n  padding: 10px;\n}\n.printing-container .top-card .card .merge .create-design {\n  margin-right: 20px;\n}\n.printing-container .top-card .card .merge .text {\n  font-size: 18px;\n}\n.printing-container .bottom-card {\n  padding: 10px;\n}\n.printing-container .bottom-card .card .card-body table {\n  width: 100%;\n}\n.printing-container .bottom-card .card .card-body table thead th {\n  width: 25%;\n  border: 1px solid #e9e9e9;\n  background: #f9f9f9;\n  padding: 0.5em;\n}\n.printing-container .bottom-card .card .card-body table tbody {\n  justify-content: center;\n  align-items: center;\n  display: contents;\n}\n.printing-container .bottom-card .card .card-body table tbody td {\n  width: 25%;\n  border: 1px solid #e9e9e9;\n  background: #fff;\n  padding: 10px;\n}\n.designer-container {\n  width: 100%;\n  height: 100vh;\n  padding: 1vh;\n  position: relative;\n}\n.hide {\n  display: none !important;\n}\n.noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -42166,7 +42197,10 @@ var render = function () {
     "div",
     { staticClass: "content-app" },
     [
-      _c("Menu", { on: { SelectedPage: _vm.selectedPage } }),
+      _c("Menu", {
+        staticClass: "side-menu",
+        on: { SelectedPage: _vm.selectedPage },
+      }),
       _vm._v(" "),
       _c("div", { staticClass: "other-pages" }, [_c("PrintingActions")], 1),
     ],
@@ -42280,9 +42314,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "editor-container" }, [
-      _c("canvas", { attrs: { id: "editor" } }),
-    ])
+    return _c(
+      "div",
+      { staticClass: "editor-container", attrs: { id: "editorContainer" } },
+      [_c("canvas", { attrs: { id: "editor" } })]
+    )
   },
 ]
 render._withStripped = true
@@ -42667,9 +42703,9 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Background Color")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Width (wv)")]),
+        _c("th", [_vm._v("Width (px)")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Height (wh)")]),
+        _c("th", [_vm._v("Height (px)")]),
         _vm._v(" "),
         _c("th", [_vm._v("Preview")]),
         _vm._v(" "),
