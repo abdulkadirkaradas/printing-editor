@@ -11,6 +11,7 @@
 @parent
 
 <script src="{{ mix('js/app.js') }}"></script>
+<script src="{{ mix('js/main.js') }}"></script>
 <script>
     $(document).ready(function(){
         const app = new Vue({

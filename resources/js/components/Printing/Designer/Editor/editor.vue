@@ -1,3 +1,5 @@
+import canvas from '../../../../canvas/main';
+import createCanvas from '../../../../canvas/main';
 <template>
     <div class="editor-container" id="editorContainer">
         <canvas id="editor"></canvas>
@@ -5,6 +7,7 @@
 </template>
 
 <script>
+import createCanvas from '../../../../canvas/main';
 
 export default {
     props: {
@@ -22,47 +25,20 @@ export default {
     },
     methods: {
         drawCanvas(){
-            let properties = this.printingDetail;
+            var properties = this.printingDetail;
             var editor = document.getElementById("editorContainer");
             var canvas = document.getElementById("editor");
             var ctx = canvas.getContext("2d");
 
-            var propertyArray = {
+            var args = {
                 "editorWidth": editor.clientWidth,
                 "editorHeight": editor.clientHeight,
                 "propWidth": properties.width,
                 "propHeight": properties.height,
             };
 
-            var newScale = this.decreaseExtraSpace(propertyArray);
-            console.log(newScale);
-
-            ctx.canvas.width = properties.width;
-            ctx.canvas.height = properties.height;
-
-            // ctx.canvas.width = newScale.newWidth;
-            // ctx.canvas.height = newScale.newHeight;
-
-            ctx.fillStyle = properties.bgcolor;
-
-            ctx.fillRect(0, 0, properties.width, properties.height);
-            // ctx.fillRect(0, 0, newScale.newWidth, newScale.newHeight);
-        },
-        decreaseExtraSpace(args) {
-            var editorWidth = args.editorWidth;
-            var editorHeight = args.editorHeight;
-            var propWidth = args.propWidth;
-            var propHeight = args.propHeight
-
-            var finalWidth = propWidth > editorWidth ? (propWidth * 30) / 100 : propWidth;
-            var finalHeight = propHeight > editorHeight ? (propHeight * 30) / 100 : propHeight;
-
-            return {
-                "newWidth": finalWidth,
-                "newHeight": finalHeight,
-                "originalWidth": args.propWidth,
-                "originalHeight": args.propHeight
-            };
+            let draw = new createCanvas();
+            draw.init(properties, editor, canvas, ctx, args);
         },
     },
     components: {
